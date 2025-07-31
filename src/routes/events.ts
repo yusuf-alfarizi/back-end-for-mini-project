@@ -6,7 +6,7 @@ const router = Router()
 // route GET /api/events
 // Dummy response, nanti diganti pakai database
 router.get('/', async (req, res) => {
-  const { search } = req.query
+  const { search, category, location } = req.query
 
   const events = [
     {
@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
       date: '2025-08-10',
       time: '10:00',
       price: 50000,
+      category: 'technology',
       description: 'Konferensi tentang React dan ekosistemnya',
     },
     {
@@ -25,7 +26,18 @@ router.get('/', async (req, res) => {
       date: '2025-09-05',
       time: '14:00',
       price: 0,
+      category: 'technology',
       description: 'Pameran teknologi dan startup',
+    },
+    {
+      id: '3',
+      name: 'Music Night',
+      location: 'Jakarta',
+      date: '2025-10-20',
+      time: '19:00',
+      price: 100000,
+      category: 'music',
+      description: 'Konser musik malam minggu',
     },
   ]
 
@@ -33,10 +45,18 @@ router.get('/', async (req, res) => {
 
   if (search) {
     const keyword = (search as string).toLowerCase()
-    filtered = events.filter((e) =>
+    filtered = filtered.filter((e) =>
       e.name.toLowerCase().includes(keyword) ||
       e.location.toLowerCase().includes(keyword)
     )
+  }
+
+  if (category) {
+    filtered = filtered.filter((e) => e.category === category)
+  }
+
+  if (location) {
+    filtered = filtered.filter((e) => e.location === location)
   }
 
   res.json(filtered)
