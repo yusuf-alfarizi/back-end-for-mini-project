@@ -6,7 +6,7 @@ const router = Router()
 // route GET /api/events
 // Dummy response, nanti diganti pakai database
 router.get('/', async (req, res) => {
-  const { search, category, location } = req.query
+  const { search, category, location, page = '1', limit = '6' } = req.query
 
   const events = [
     {
@@ -59,7 +59,14 @@ router.get('/', async (req, res) => {
     filtered = filtered.filter((e) => e.location === location)
   }
 
-  res.json(filtered)
+  const pageNum = parseInt(page as string)
+  const limitNum = parseInt(limit as string)
+  const start = (pageNum - 1) * limitNum
+  const end = start + limitNum
+
+  const paginated = filtered.slice(start, end)
+
+  res.json(paginated)
 })
 
 router.get('/:id', async (req, res) => {
