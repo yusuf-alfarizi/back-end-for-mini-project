@@ -92,6 +92,15 @@ router.get('/:id', async (req, res) => {
       price: 0,
       description: 'Pameran teknologi dan startup',
     },
+    {
+      id: '3',
+      name: 'Music Night',
+      location: 'Jakarta',
+      date: '2025-10-20',
+      time: '19:00',
+      price: 100000,
+      description: 'Konser musik malam minggu',
+    },
   ]
 
   const event = events.find((e) => e.id === id)
